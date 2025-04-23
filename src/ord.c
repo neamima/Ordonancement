@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "../include/ord.h"
 
 process *createprocess(char *name,int entre,int duree,int nb){
@@ -7,6 +8,8 @@ process *createprocess(char *name,int entre,int duree,int nb){
     p->name = name;
     p->date_entree = entre;
     p->duree = duree;
+    p->temp_restant = duree;
+    p->fin=0;
     p->nb=nb;
     return p;
 }
@@ -126,4 +129,154 @@ void printmatrice(matrice *m){
         printf("\n");
     }
     printf("------------------\n");
+}
+
+int getmaxlenght(node *liste){
+    int lenght=0;
+    if(!liste){
+        return lenght;
+    }
+    while(liste){
+        int temp = strlen(liste->p->name);
+        if(temp>lenght){
+            lenght = temp;
+        }
+        liste = liste->nxt;
+    }
+    return lenght;
+}
+
+void stepprintinggraph(matrice *m,node *liste,int step){
+    int l = getmaxlenght(liste),i,j;
+    for(i=0;i<l;i++){
+        printf(" ");
+    }
+    printf("^\n");
+    for(i=0;i<m->row;i++){
+        for(j=0;j<l-strlen(liste->p->name);j++){
+            printf(" ");
+        }
+        printf("%s|",liste->p->name);
+        for(j=0;j<step;j++){
+            if(m->matrice[i][j]==1){
+                printf("====");
+            } else {
+                printf("    ");
+            }
+        }
+
+        printf("\n");
+        liste=liste->nxt;
+    }
+    for(i=0;i<l;i++){
+        printf(" ");
+    }
+    printf("+");
+    for(i=0;i<m->column;i++){
+        printf("----");
+    }
+    printf("-->\n");
+    for(i=0;i<l;i++){
+        printf(" ");
+    }
+    for(i=0;i<m->column+1;i++){
+        if(i<10){
+            printf("%d   ",i);
+        }else if(i<100){
+            printf("%d  ",i);
+        }else {
+            printf("%d ",i);
+        }
+        
+    }
+}
+
+void printlignetable(int l){
+    int i;
+    printf("+");
+    for(i=0;i<l;i++){
+        printf("-");
+    }
+    printf("+");
+    for(i=0;i<15;i++){
+        printf("-");
+    }
+    printf("+");
+    for(i=0;i<7;i++){
+        printf("-");
+    }
+    printf("+");
+    for(i=0;i<19;i++){
+        printf("-");
+    }
+    printf("+");
+    for(i=0;i<17;i++){
+        printf("-");
+    }
+    printf("+\n");
+}
+void printcase(int n,int space){
+    int i,k,j;
+    if(n<10){
+        k=(space - 1)/2;
+        j=space-(k+1);
+    }else if (n<100){
+        k=(space - 2)/2;
+        j=space-(k+2);
+    }else {
+        k=(space - 3)/2;
+        j=space-(k+3);
+    }
+    for(i=0;i<k;i++){
+        printf(" ");
+    }
+    printf("%d",n);
+    for(i=0;i<j;i++){
+        printf(" ");
+    }
+    printf("|");
+}
+
+void printtable(matrice *m,node *liste){
+    int l = getmaxlenght(liste),i,j;
+    char *p ="Processus";
+    int temp=strlen(p);
+    if(temp > l){
+        l=temp;
+    }
+    printlignetable(l);
+    int k=(l-strlen(p))/2;
+    printf("|");
+    for(j=0;j<k;j++){
+        printf(" ");
+    }
+    
+    printf("%s",p);
+    k=l-(k+strlen(p));
+    for(j=0;j<k;j++){
+        printf(" ");
+    }
+    printf("| Date d'entree | Duree | Temps de rotation | Temps d'attente |\n",p);
+    printlignetable(l);
+    for(i = 0;i<m->row;i++){
+        printf("|");
+        k=(l-strlen(liste->p->name))/2;
+        for(j=0;j<k;j++){
+            printf(" ");
+        }
+        printf("%s",liste->p->name);
+        k=l-(k+strlen(liste->p->name));
+        for(j=0;j<k;j++){
+            printf(" ");
+        }
+        printf("|");
+        printcase(liste->p->date_entree,15);
+        printcase(liste->p->duree,7);
+        printcase(liste->p->fin-liste->p->date_entree,19);
+        printcase(liste->p->fin-liste->p->date_entree-liste->p->duree,17);
+        printf("\n");
+        printlignetable(l);
+        liste=liste->nxt;
+    }
+
 }

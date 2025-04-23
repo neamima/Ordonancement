@@ -49,9 +49,10 @@ matrice *rr(node *liste,int r){
         graph = addcolumn(graph);
         if(queue){
             graph->matrice[queue->p->nb][graph->column-1]=1;
-            queue->p->duree--;
+            queue->p->temp_restant--;
             j++;
-            if(queue->p->duree==0){
+            if(queue->p->temp_restant==0){
+                queue->p->fin=i+1;
                 queue=delfqueue(queue);
                 j=0;
             } else if(j==r){

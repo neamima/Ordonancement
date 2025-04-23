@@ -35,8 +35,9 @@ matrice *fifo(node *liste){
         graph = addcolumn(graph);
         if(queue){
             graph->matrice[queue->p->nb][graph->column-1]=1;
-            queue->p->duree--;
-            if(queue->p->duree==0){
+            queue->p->temp_restant--;
+            if(queue->p->temp_restant==0){
+                queue->p->fin=i+1;
                 queue=delfqueue(queue);
             }
         }

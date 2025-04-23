@@ -5,6 +5,8 @@ typedef struct process {
     char *name;
     int date_entree;
     int duree;
+    int temp_restant;
+    int fin;
     int nb;
 } process;
 
@@ -36,5 +38,9 @@ int duree_totale(node *root);
 matrice *creatematrice(int taille);
 matrice *addcolumn(matrice *m);
 void printmatrice(matrice *m);
+
+void stepprintinggraph(matrice *m,node *liste,int i);
+void printtable(matrice *m,node *liste);
+
 
 #endif // ORD_H
