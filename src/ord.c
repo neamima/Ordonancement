@@ -5,7 +5,7 @@
 
 process *createprocess(char *name,int entre,int duree,int nb){
     process *p = (process*)malloc(sizeof(process));
-    p->name = name;
+    strcpy(p->name , name);
     p->date_entree = entre;
     p->duree = duree;
     p->temp_restant = duree;
@@ -279,4 +279,36 @@ void printtable(matrice *m,node *liste){
         liste=liste->nxt;
     }
 
+}
+
+node *filetoliste(char *path){
+    FILE *file = fopen(path,"r");
+    node *liste=NULL;
+    char line[100];
+    int i=0;
+    while(fgets(line,sizeof(line),file)){
+        char *com =strstr(line,"//");
+        if (com != NULL) {
+            if(com==line){
+                continue;
+            }else{
+                *com = '\0';
+            }
+        }else {
+            int l=strcspn(line,"\n");
+            if(l==0){
+                continue;
+            }
+            line[l]='\0';
+        }
+        
+        
+        char *name = strtok(line,",");
+        char *entre =strtok(NULL,",");
+        char *dure = strtok(NULL,",");
+        liste = addnode(liste,createprocess(name,atoi(entre),atoi(dure),i));
+        i++;
+    }
+    fclose(file);
+    return liste;
 }

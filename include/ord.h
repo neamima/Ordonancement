@@ -2,7 +2,7 @@
 #define ORD_H
 
 typedef struct process {
-    char *name;
+    char name[20];
     int date_entree;
     int duree;
     int temp_restant;
@@ -41,6 +41,8 @@ void printmatrice(matrice *m);
 
 void stepprintinggraph(matrice *m,node *liste,int i);
 void printtable(matrice *m,node *liste);
+
+node *filetoliste(char *path);
 
 
 #endif // ORD_H
