@@ -281,12 +281,20 @@ void printtable(matrice *m,node *liste){
 
 }
 
+char *rmfirstspace(char* line){
+    while(*line==' ' || *line=='\t'){
+        *line++;
+    }
+    return line;
+}
+
 node *filetoliste(char *path){
     FILE *file = fopen(path,"r");
     node *liste=NULL;
     char line[100];
     int i=0;
     while(fgets(line,sizeof(line),file)){
+        strcpy(line,rmfirstspace(line));
         char *com =strstr(line,"//");
         if (com != NULL) {
             if(com==line){
