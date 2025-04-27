@@ -33,7 +33,6 @@ void printnode(node *root);
 
 
 int taille(node *root);
-int duree_totale(node *root);
 
 matrice *creatematrice(int taille);
 matrice *addcolumn(matrice *m);

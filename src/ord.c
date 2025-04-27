@@ -95,14 +95,6 @@ int taille(node *root){
     return taille;
 }
 
-int duree_totale(node *root){
-    int duree = 0;
-    while(root){
-        duree += root->p->duree;
-        root=root->nxt;
-    }
-    return duree;
-}
 
 matrice *creatematrice(int taille){
     matrice *m = (matrice*)malloc(sizeof(matrice));
