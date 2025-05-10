@@ -11,25 +11,10 @@
 
 
 int main(int argc,int *argv[]){
-    
-    /*node *root=createnode(createprocess("p1",0,3,0));
-    addnode(root,createprocess("p2",2,6,1));
-    addnode(root,createprocess("p3",4,4,2));
-    addnode(root,createprocess("p4",6,5,3));
-    addnode(root,createprocess("p5",8,2,4));
-    
-    int l = taille(root);
-    matrice *graph = rr(root,1);
-    //printmatrice(graph);
-    printtable(graph,root);
-    stepprintinggraph(graph,root,graph->column);*/
-    /*char *path=(char *)argv[argc-1];
-    node *root=filetoliste(path);
-    int l = taille(root);
-    matrice *graph = rr(root,1);
-    //printmatrice(graph);
-    printtable(graph,root);
-    stepprintinggraph(graph,root,graph->column);*/
+    if (argc != 2){
+        printf("usage : %s <path>\n",argv[0]);
+        return EXIT_FAILURE;
+    }
 
     char *path=(char *)argv[argc-1];
     node *liste=filetoliste(path);
@@ -53,7 +38,6 @@ int main(int argc,int *argv[]){
         default:
             printf("choix invalide\n");
     }
-    printf("graph");
     printtable(graph,liste);
     int i=0;
     char t;
